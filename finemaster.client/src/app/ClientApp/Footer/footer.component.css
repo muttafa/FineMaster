@@ -1,0 +1,31 @@
+.rounded-div {
+  border-radius: 10px; /* Kenar yarıçapını isteğe bağlı olarak ayarlayın */
+  background-color: white; /* Arka plan rengini beyaza ayarlayın */
+  overflow: hidden;
+  text-align: center; /* Yazıları ortala */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti ekleyin */
+}
+
+.section {
+  display: inline-block;
+  width: 12.5%; /* Her bölümün genişliği konteynırın 1/8'i olacak şekilde ayarlanır */
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 1px solid #ccc; /* Bölümler arasına kenarlık ekleyin */
+}
+
+  .section:last-child {
+    border-right: none; /* Son bölümden kenarlığı kaldırın */
+  }
+
+.profilePhoto {
+  margin-top: -70px;
+  float: left;
+}
+.mainTitles {
+  font-family: "fantasy", math;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px
+}
