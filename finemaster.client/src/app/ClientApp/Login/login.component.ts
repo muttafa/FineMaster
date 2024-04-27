@@ -23,14 +23,32 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    if (this.email != null || this.password) {
+    if (this.email != null && this.password != null) {
       let dataToSend = {
         email: this.email,
         password: this.password
-      }
-      this.apiService.Login(dataToSend).subscribe(response => {
-
-      });
+      };
+      this.apiService.Login(dataToSend).subscribe((response: any) => {
+        localStorage.setItem("token", response);
+        this.getUserInfo(response);
+      })
     }
+  }
+
+  getUserInfo(token: any) {
+    this.apiService.getUserInfo(token).subscribe((response: any) => {
+      if (response != null) {
+        if (response.role == 'student') {
+          this.router.navigate(['/student-home']);
+        }
+        else if (response.role == 'teacher') {
+          console.log("burası teacher")
+
+        }
+        else {
+
+        }
+      }
+    })
   }
 }

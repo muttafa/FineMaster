@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
+using FineMaster.Server.ProjectFunctions;
+
 
 namespace FineMaster.Server.Controllers
 {
@@ -40,7 +42,7 @@ namespace FineMaster.Server.Controllers
             if (newUser.Username != null)
             {
                 user.Username = newUser.Username;
-                user.Password =ProjectFunctions.HashCalculator(newUser.Password);
+                user.Password = ProjectFunctions.ProjectFunctions.HashCalculator(newUser.Password);
                 user.Email = newUser.Email;
                 user.City = newUser.SelectedCity;
                 user.Birthdate = newUser.Birthdate;

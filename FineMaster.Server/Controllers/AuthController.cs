@@ -22,16 +22,17 @@ namespace FineMaster.Server.Controllers
         }
       
         [HttpPost("Login")]
-        public IActionResult Login([FromBody] Users userInfo)
+        public JsonResult Login([FromBody] Users userInfo)
         {
             var user = UserControl(userInfo);
 
             if (user == null)
             {
-                return NotFound("Kullanıcı Bulunamadı");
+                return new JsonResult(new { error = "Kullanıcı Bulunamadı" }); // JSON formatında bir nesne döndürülüyor
             }
+
             var token = CreateToken(user);
-            return Ok(token);
+            return new JsonResult(new { token });
         }
 
         private string CreateToken(Users user)
@@ -65,7 +66,7 @@ namespace FineMaster.Server.Controllers
         private Users UserControl(Users userInfo)
         {
 
-            var pass = ProjectFunctions.HashCalculator(userInfo.Password);
+            var pass = ProjectFunctions.ProjectFunctions.HashCalculator(userInfo.Password);
 
             return _dbContext.Users.FirstOrDefault(x => x.Email.ToLower() == userInfo.Email && x.Password == pass);
         }

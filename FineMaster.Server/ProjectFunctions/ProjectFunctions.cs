@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace FineMaster.Server.Controllers
+namespace FineMaster.Server.ProjectFunctions
 {
     public class ProjectFunctions
     {

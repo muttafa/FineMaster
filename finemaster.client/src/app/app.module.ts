@@ -12,6 +12,7 @@ import { NavbarModule } from './ClientApp/Navbar/navbar.module';
 import { HomeModule } from './ClientApp/Home/home.module';
 import { FooterModule } from './ClientApp/Footer/footer.module';
 import { RegisterComponent } from './ClientApp/Register/register.component';
+import { StudentHomePageModule } from './ClientApp/Student/HomePage/studentHomePage.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { RegisterComponent } from './ClientApp/Register/register.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    LoginModule
+    LoginModule,
+    StudentHomePageModule
 
 
 
