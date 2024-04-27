@@ -1,96 +1,145 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title text-center mb-4">Kayıt Ol</h2>
-          <form [formGroup]="registrationForm" (ngSubmit)="checkForm()">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="username">Kullanıcı Adı</label>
-                  <input type="text" class="form-control" id="username" formControlName="username">
-                  <div *ngIf="submitted && registrationForm.get('username')?.errors?.['required']" class="text-danger">Kullanıcı adı gereklidir.</div>
-                </div>
 
-                <div class="form-group">
-                  <label for="password">Şifre</label>
-                  <input type="password" class="form-control" id="password" formControlName="password">
-                  <div *ngIf="submitted && registrationForm.get('password')?.errors?.['required']" class="text-danger">Şifre gereklidir.</div>
-                </div>
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Bootstrap Sidebar</h3>
+    </div>
 
-                <div class="form-group">
-                  <label></label>
-                  <select class="form-control" formControlName="memberType">
-                    <option value="" disabled selected>Üyelik Türü</option>
-                    <option value="student">Öğrenci</option>
-                    <option value="teacher">Öğretmen</option>
-                  </select>
-                  <div *ngIf="submitted && registrationForm.get('memberType')?.errors?.['required']" class="text-danger">Üyelik türü seçmek gereklidir.</div>
-                </div>
-                <div class="form-group">
-                  <label for="email">Telefon Numarası</label>
-                  <input type="tel" class="form-control" id="number" formControlName="number">
-                  <div *ngIf="submitted && registrationForm.get('number')?.errors?.['required']" class="text-danger">Telefon Numarası gereklidir.</div>
-                </div>
-                <div *ngIf="registrationForm.get('memberType')?.value === 'teacher'">
+    <ul class="list-unstyled components">
+      <p>Dummy Heading</p>
+      <li class="active">
+        <a href="#homeSubmenu" (click)="toggleSubMenu($event)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+          <li>
+            <a href="#">Home 1</a>
+          </li>
+          <li>
+            <a href="#">Home 2</a>
+          </li>
+          <li>
+            <a href="#">Home 3</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">About</a>
+      </li>
+      <li>
+        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+        <ul class="collapse list-unstyled" id="pageSubmenu">
+          <li>
+            <a href="#">Page 1</a>
+          </li>
+          <li>
+            <a href="#">Page 2</a>
+          </li>
+          <li>
+            <a href="#">Page 3</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">Portfolio</a>
+      </li>
+      <li>
+        <a href="#">Contact</a>
+      </li>
+    </ul>
 
-                  <div class="form-group">
-                    <label for="subject">Branş</label>
-                    <select class="form-control" formControlName="selectedLesson">
-                      <option [ngValue]="none" disabled selected>--Branşınızı Seçin--</option>
-                      <option *ngFor="let item of lessonList.lessonList" [ngValue]="item.lessonID">{{item.lessonName}}</option>
-                    </select>
-                    <div *ngIf="submitted && registrationForm.get('selectedLesson')?.errors?.['required']" class="text-danger">Bir branş seçmek gereklidir.</div>
-                  </div>
-                </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="email">E-posta</label>
-                    <input type="email" class="form-control" id="email" formControlName="email">
-                    <div *ngIf="submitted && registrationForm.get('email')?.errors?.['required']" class="text-danger">E-posta gereklidir.</div>
-                    <div *ngIf="submitted && registrationForm.get('email')?.errors?.['email']" class="text-danger">Geçerli bir e-posta adresi giriniz.</div>
-                  </div>
-                  <div class="form-group">
-                    <label for="confirm_password">Şifreyi Onayla</label>
-                    <input type="password" class="form-control" id="confirm_password" formControlName="confirmPassword">
-                    <div *ngIf="submitted && registrationForm.get('confirmPassword')?.errors?.['required']" class="text-danger">Şifreyi onaylamak gereklidir.</div>
-                    <div *ngIf="submitted && registrationForm.get('confirmPassword')?.value != registrationForm.get('password')?.value" class="text-danger">Şifreler eşleşmiyor</div>
-                  </div>
-                  <div class="form-group">
-                    <label for="birthdate">Doğum Tarihi</label>
-                    <input type="date" class="form-control" id="birthdate" formControlName="birthdate">
-                    <div *ngIf="submitted && registrationForm.get('birthdate')?.errors?.['required']" class="text-danger">Doğum tarihi gereklidir.</div>
-                  </div>
-                  <div *ngIf="registrationForm.get('memberType')?.value === 'teacher'">
+    <ul class="list-unstyled CTAs">
+      <li>
+        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+      </li>
+      <li>
+        <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+      </li>
+    </ul>
+  </nav>
 
-                    <div class="form-group">
-                      <label for="city">Şehir</label>
-                      <select class="form-control" formControlName="selectedCity" (change)="loadDistinc(selectedCity)">
-                        <option [ngValue]="none" disabled selected>Şehir</option>
-                        <option *ngFor="let city of cities.data" [ngValue]="city.id">{{city.name}}</option>
-                      </select>
-                      <div *ngIf="submitted && registrationForm.get('selectedCity')?.errors?.['required']" class="text-danger">Bir şehir seçmek gereklidir.</div>
-                    </div>
-                    <div class="form-group">
-                      <label for="district">İlçe</label>
-                      <select class="form-control" formControlName="selectedDistrict">
-                        <option [ngValue]="none" disabled selected>İlçe</option>
-                        <option *ngFor="let district of districts" [ngValue]="district.id">{{district.name}}</option>
-                      </select>
-                      <div *ngIf="submitted && registrationForm.get('selectedDistrict')?.errors?.['required']" class="text-danger">Bir ilçe seçmek gereklidir.</div>
-                    </div>
-                  </div>
-                </div>
+
+  <div class="col-md-12" style="margin-top: 50px">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
+            <div class="card-body text-center">
+              <div class="profile-pic-top">
+                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
               </div>
-            <button type="submit" style="margin-top: 25px" class="btn btn-primary btn-block">Kayıt Ol</button>
-          </form>
-          <div class="mt-3 text-center">
-            Zaten üye misiniz? <a href="#">Giriş yapın</a>
+              <br />
+              <div class="card-text mt-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
+            <div class="card-body text-center">
+              <div class="profile-pic-top">
+                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+              </div>
+              <br />
+              <div class="card-text mt-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
+            <div class="card-body text-center">
+              <div class="profile-pic-top">
+                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+              </div>
+              <br />
+              <div class="card-text mt-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
+            <div class="card-body text-center">
+              <div class="profile-pic-top">
+                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+              </div>
+              <br />
+              <div class="card-text mt-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card mb-4">
+            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
+            <div class="card-body text-center">
+              <div class="profile-pic-top">
+                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+              </div>
+              <br />
+              <div class="card-text mt-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
     </div>
+    <div class="col-md-1"></div>
   </div>
+
+
 </div>
