@@ -1,4 +1,5 @@
 ﻿using FineMaster.Server.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -43,9 +44,10 @@ namespace FineMaster.Server.Controllers
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+
             var claim = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier , user.Username),
+                new Claim(ClaimTypes.Email , user.Email),
                 new Claim(ClaimTypes.Role , user.Role),
             };
 
@@ -62,7 +64,10 @@ namespace FineMaster.Server.Controllers
 
         private Users UserControl(Users userInfo)
         {
-            return _dbContext.Users.FirstOrDefault(x => x.Username.ToLower() == userInfo.Username && x.Password == userInfo.Password);
+
+            var pass = ProjectFunctions.HashCalculator(userInfo.Password);
+
+            return _dbContext.Users.FirstOrDefault(x => x.Email.ToLower() == userInfo.Email && x.Password == pass);
         }
     }
 }

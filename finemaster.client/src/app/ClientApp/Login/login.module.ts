@@ -1,23 +1,24 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NavbarComponent } from './navbar.component';
-import { RouterModule } from '@angular/router';
+import { LoginComponent } from './login.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    LoginComponent
   ],
   exports: [
-    NavbarComponent
+    LoginComponent
   ],
 
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: []
 })
-export class NavbarModule { }
+export class LoginModule { }

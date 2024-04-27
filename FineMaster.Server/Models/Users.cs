@@ -17,7 +17,7 @@ namespace FineMaster.Server.Models
         public int? AdID { get; set; }
         public string? UserImage { get; set; }
         public string? Role { get; set; }
-
+        public string? PhoneNumber { get; set; }
         public List<Ad>? Ads { get; set; }
     }
 }

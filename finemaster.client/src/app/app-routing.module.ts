@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from '../app/ClientApp/Home/home.component'; 
+import { HomeComponent } from './ClientApp/Home/home.component'; 
+import { RegisterComponent } from './ClientApp/Register/register.component';
+import { LoginComponent } from './ClientApp/Login/login.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Varsayılan olarak /home'a yönlendir
-  { path: '**', redirectTo: '/home' } // Bilinmeyen URL'leri /home'a yönlendir
+  { path: '**', redirectTo: '/home' } 
 ];
 
 @NgModule({

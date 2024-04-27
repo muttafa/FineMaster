@@ -1,31 +1,51 @@
-.rounded-div {
-  border-radius: 10px; /* Kenar yarıçapını isteğe bağlı olarak ayarlayın */
-  background-color: white; /* Arka plan rengini beyaza ayarlayın */
-  overflow: hidden;
-  text-align: center; /* Yazıları ortala */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Gölge efekti ekleyin */
+/*footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-.section {
-  display: inline-block;
-  width: 12.5%; /* Her bölümün genişliği konteynırın 1/8'i olacak şekilde ayarlanır */
-  height: 100%;
-  box-sizing: border-box;
-  border-right: 1px solid #ccc; /* Bölümler arasına kenarlık ekleyin */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-  .section:last-child {
-    border-right: none; /* Son bölümden kenarlığı kaldırın */
+.footer-logo img {
+  width: 100px;
+}
+
+.footer-links ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+  .footer-links ul li {
+    display: inline-block;
+    margin-right: 20px;
   }
 
-.profilePhoto {
-  margin-top: -70px;
-  float: left;
+    .footer-links ul li:last-child {
+      margin-right: 0;
+    }
+
+    .footer-links ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+.footer-social a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 10px;
 }
-.mainTitles {
-  font-family: "fantasy", math;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px
-}
+
+  .footer-social a:last-child {
+    margin-right: 0;
+  }
+*/
