@@ -1,11 +1,11 @@
 <div *ngIf="userRole == null" class="row col-12 sticky-top">
   <div class="col-md-1"></div>
   <div class="col-md-2 text-md-left text-center">
-    <img src="#" alt="LOGO" style="float:left" />
+    <img src="../../../assets/images/findamasters-logo-vector.png" alt="LOGO" style="float:left;width:200px" />
   </div>
   <div class="col-md-7"></div>
   <div class="col-md-1 text-md-right text-center">
-    <div class="row">
+    <div class="row" style=" height: 100%; align-items: center;">
       <div class="col-12" style="display:flex; justify-content: space-between">
         <a [routerLink]="['/login']" routerLinkActive="active">Giriş Yap</a>
         <a [routerLink]="['/register']" routerLinkActive="active">Kayıt Ol</a>
@@ -20,16 +20,15 @@
 <div *ngIf="userRole == 'student'" class="row col-12 sticky-top">
   <div class="col-md-1"></div>
   <div class="col-md-2 text-md-left text-center">
-    <img src="#" alt="LOGO" style="float:left" />
+    <img src="../../../assets/images/findamasters-logo-vector.png"  alt="LOGO" style="float:left;width:200px" />
   </div>
   <div class="col-md-7"></div>
   <div class="col-md-1 text-md-right text-center">
-    <div class="row">
+    <div class="row" style=" height: 100%; align-items: center;">
       <div class="col-12" style="display:flex; justify-content: space-between">
-        <a href="#">Derslerim</a>
-        <a href="#"><i class="fa-solid fa-message"></i></a>
-        <a href="#"><i class="fa-solid fa-user"></i></a>
-
+        <a href="#" style="color: black"><i class="fa-solid fa-bell"></i></a>
+        <a href="#" style="color: black"><i class="fa-solid fa-comments"></i></a>
+        <a href="#" style="color: black"><i class="fa-solid fa-user"></i></a>
       </div>
     </div>
   </div>
@@ -40,14 +39,16 @@
 <div *ngIf="userRole == 'teacher'" class="row col-12 sticky-top">
   <div class="col-md-1"></div>
   <div class="col-md-2 text-md-left text-center">
-    <img src="#" alt="LOGO" style="float:left" />
+    <img src="../../../assets/images/findamasters-logo-vector.png" alt="LOGO" style="float:left;width:200px" />
   </div>
   <div class="col-md-7"></div>
   <div class="col-md-1 text-md-right text-center">
-    <div class="row">
+    <div class="row" style=" height: 100%; align-items: center;">
       <div class="col-12" style="display:flex; justify-content: space-between">
-
-        Bu öğretmen adamdır adam
+        <a [routerLink]="['/posting']" style="color: black"><i class="fa-solid fa-plus"></i></a>
+        <a href="#" style="color: black"><i class="fa-solid fa-bell"></i></a>
+        <a href="#" style="color: black"><i class="fa-solid fa-comments"></i></a>
+        <a href="#" style="color: black"><i class="fa-solid fa-user"></i></a>
       </div>
     </div>
   </div>

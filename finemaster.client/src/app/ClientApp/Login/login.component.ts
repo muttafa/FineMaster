@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
       this.apiService.Login(dataToSend).subscribe((response: any) => {
         localStorage.setItem("token", response);
         this.getUserInfo(response);
+        this.cdr.detectChanges();
       })
     }
   }
@@ -40,10 +41,11 @@ export class LoginComponent implements OnInit {
       if (response != null) {
         if (response.role == 'student') {
           this.router.navigate(['/student-home']);
+          sessionStorage.setItem("userInfo",JSON.stringify(response))
         }
         else if (response.role == 'teacher') {
-          console.log("burası teacher")
-
+          this.router.navigate(['/teacher-home']);
+          sessionStorage.setItem("userInfo", JSON.stringify(response))
         }
         else {
 

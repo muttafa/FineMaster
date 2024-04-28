@@ -62,8 +62,7 @@ export class ApiService {
     const url = `${this.baseUrl}/Auth/Login`;
     return this.http.post(url, userInfo).pipe(
       map((response: any) => {
-        // Başarılı bir yanıt alındığını varsayalım
-        return response.token; // veya uygun olan diğer veriyi döndürün
+        return response.token;
       }),
       catchError((error: any) => {
         console.error(error);
@@ -72,16 +71,34 @@ export class ApiService {
     );
   }
 
-
-  getProducts(): Observable<any> {
-    const url = `${this.baseUrl}/Products/getProducts`;
-    return this.http.get(url).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error(error.message);
+  createPost(postDetails: any): Observable<any> {
+    const url = `${this.baseUrl}/Teacher/CreatePost`;
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(url, postDetails, { headers: headers }).pipe(
+     
+      catchError((error: any) => {
+        console.error(error);
         return throwError('Something went wrong; please try again later.');
       })
     );
   }
-
-
+  getPosts(): Observable<any> {
+    const url = `${this.baseUrl}/Student/GetPosts`;
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(url ,{ headers: headers }).pipe(
+      
+      catchError((error: any) => {
+        console.error(error);
+        return throwError('Something went wrong; please try again later.');
+      })
+    );
+  }
 }

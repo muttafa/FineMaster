@@ -6,18 +6,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-studentHome',
-  templateUrl: './studentHomePage.component.html',
-  styleUrl: './studentHomePage.component.css'
+  selector: 'app-teacherHome',
+  templateUrl: './teacherHomePage.component.html',
+  styleUrl: './teacherHomePage.component.css'
 })
-export class StudentHomePageComponent implements OnInit {
+export class TeacherHomePageComponent implements OnInit {
 
   constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
 
-  postList: any;
+ 
 
   ngOnInit(): void {
-    this.getPosts();
+
   }
   toggleSubMenu(event: Event): void {
     event.preventDefault();
@@ -27,9 +27,5 @@ export class StudentHomePageComponent implements OnInit {
       submenu.classList.toggle('show');
     }
   }
-  getPosts() {
-    this.apiService.getPosts().subscribe((response: any) => {
-      this.postList = response;
-    });
-  }
+
 }

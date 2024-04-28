@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../api.service.spec';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 
 
@@ -12,16 +13,30 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private location: Location) { }
 
-
+  urlPath: any;
   userRole: any;
   ngOnInit() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.apiService.getUserInfo(token).subscribe(response => {
-        this.userRole = response.role;
-      })
+    this.urlPath = this.getCurrentUrl();
+
+    if (this.urlPath != "/home") {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.apiService.getUserInfo(token).subscribe(response => {
+          this.userRole = response.role;
+        })
+      }
+    }
+    else {
+      localStorage.setItem('token', "");
+      this.userRole = null;
     }
   }
+
+  getCurrentUrl() {
+    const currentUrl = this.location.path(); // Sadece yolu alır
+    return currentUrl;
+  }
+
 }

@@ -7,7 +7,7 @@ namespace FineMaster.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Student")]
+    [Authorize(Roles = "student")]
     public class StudentController : ControllerBase
     {
         
@@ -25,6 +25,31 @@ namespace FineMaster.Server.Controllers
             var name = identity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? null;
 
             return Ok();
+        }
+
+
+        [HttpGet("GetPosts")]
+        public ActionResult GetPosts()
+        {
+            var posts = _dbContext.Ads
+                .Select(ad => new
+                {
+                    AdId = ad.AdID,
+                    Title = ad.AdTitle,
+                    Summary = ad.AdSummary,
+                    Price = ad.Price,
+                    BackgroundImage = ad.AdImage,
+                    UserName = _dbContext.Users
+                        .Where(user => user.ID == ad.UserID)
+                        .Select(user => user.Username)
+                        .FirstOrDefault(),
+                    UserProfilePhoto = _dbContext.Users
+                        .Where(user => user.ID == ad.UserID)
+                        .Select(user => user.UserImage)
+                        .FirstOrDefault()
+                })
+                .ToList();
+            return Ok(posts);
         }
     }
 }

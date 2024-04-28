@@ -11,7 +11,7 @@ namespace FineMaster.Server.Models
         public string AdSummary { get; set; }
         public string AdImage { get; set; }
         public string Price { get; set; }
-
+        public int LessonID { get; set; }
         public int UserID { get; set; }
         [ForeignKey(nameof(UserID))]
         public Users? User { get; set; }
