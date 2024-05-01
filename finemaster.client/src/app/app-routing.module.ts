@@ -6,6 +6,7 @@ import { LoginComponent } from './ClientApp/Login/login.component';
 import { StudentHomePageComponent } from './ClientApp/Student/HomePage/studentHomePage.component';
 import { TeacherHomePageComponent } from './ClientApp/Teacher/HomePage/teacherHomePage.component';
 import { PostingComponent } from './ClientApp/Teacher/Posting/posting.component';
+import { PostDetailComponent } from './ClientApp/PostDetail/postDetailPage.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'student-home', component: StudentHomePageComponent },
   { path: 'teacher-home', component: TeacherHomePageComponent },
   { path: 'posting', component: PostingComponent },
+  { path: 'postDetail/:userID', component: PostDetailComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Varsayılan olarak /home'a yönlendir
   { path: '**', redirectTo: '/home' } 
 ];

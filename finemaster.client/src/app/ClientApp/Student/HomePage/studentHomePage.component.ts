@@ -27,9 +27,22 @@ export class StudentHomePageComponent implements OnInit {
       submenu.classList.toggle('show');
     }
   }
+  truncateText(text: string, maxLength: number): string {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  }
   getPosts() {
     this.apiService.getPosts().subscribe((response: any) => {
       this.postList = response;
+      console.log(this.postList);
     });
   }
+  goToDetailPage(id: any) {
+    if (id != null) {
+      this.router.navigate(['/postDetail', id]);
+    }
+  }
+
 }

@@ -61,83 +61,35 @@
   <div id="content" class="p-4">
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <div class="card mb-4">
-            <a href="detay_sayfasi.html">
-              <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
+        <ng-container *ngFor="let card of postList; let i = index;">
+          <div class="col-md-3">
+            <div class="card mb-4 postCard"  (click)="goToDetailPage(card.adId)">
+              <div class="card-img-top" [style.backgroundImage]="'url(' + card.backgroundImage + ')'" style="height: 200px; background-size: cover;"></div>
               <div class="card-body text-center">
                 <div class="profile-pic-top">
-                  <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+                  <img *ngIf="card.userProfilePhoto != null" src="card.userProfilePhoto" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+                  <img *ngIf="card.userProfilePhoto == null" src="../../../../assets/images/avatar-account-icon-default-social-media-profile-photo-vector.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
                 </div>
                 <br />
                 <div class="card-text mt-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                  <p style="font-weight: bold; color: darkorchid; padding: 0px;font-size: 20px;">{{card.title}}</p>
+                  <div>
+                    <span style="float:left">{{card.userName}}</span>
+                    <span style="float:right;font-size: 10px">Ana Branş: {{card.lessonName}}</span><br />
+                  </div>
+
+                  <p style="float:left">{{ truncateText(card.summary, 10) }}</p>
+                  <p style="float:right">{{card.price}}₺ /saat</p>
                 </div>
               </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card mb-4">
-            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
-            <div class="card-body text-center">
-              <div class="profile-pic-top">
-                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
-              </div>
-              <br />
-              <div class="card-text mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card mb-4">
-            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
-            <div class="card-body text-center">
-              <div class="profile-pic-top">
-                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
-              </div>
-              <br />
-              <div class="card-text mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="card mb-4">
-            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
-            <div class="card-body text-center">
-              <div class="profile-pic-top">
-                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
-              </div>
-              <br />
-              <div class="card-text mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-              </div>
-            </div>
-          </div>
-        </div>
+          <!-- Check if the index is divisible by 4 and not the first iteration -->
+          <!-- This means every 4th card and onward -->
+          <div *ngIf="(i + 1) % 4 === 0 && i !== 0" class="w-100"></div>
+        </ng-container>
       </div>
-      <div class="row">
-        <div class="col-md-3">
-          <div class="card mb-4">
-            <div class="card-img-top" style="background-image: url('../../../assets/images/ppback.png'); height: 200px; background-size: cover;"></div>
-            <div class="card-body text-center">
-              <div class="profile-pic-top">
-                <img src="../../../assets/images/pp.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
-              </div>
-              <br />
-              <div class="card-text mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-              </div>
-            </div>
-          </div>
-        </div>
 
-
-      </div>
     </div>
   </div>
 </div>

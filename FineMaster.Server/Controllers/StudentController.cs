@@ -46,7 +46,11 @@ namespace FineMaster.Server.Controllers
                     UserProfilePhoto = _dbContext.Users
                         .Where(user => user.ID == ad.UserID)
                         .Select(user => user.UserImage)
-                        .FirstOrDefault()
+                        .FirstOrDefault(),
+                    LessonName = _dbContext.Lessons.Where(lesson => lesson.LessonID == ad.LessonID)
+                                .Select(lesson => lesson.LessonName)
+                                .FirstOrDefault(),
+                    lessonID = ad.LessonID
                 })
                 .ToList();
             return Ok(posts);
