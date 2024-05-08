@@ -25,13 +25,11 @@ export class NavbarComponent implements OnInit {
       if (token) {
         this.apiService.getUserInfo(token).subscribe(response => {
           this.userRole = response.role;
+          this.cdr.detectChanges();
         })
       }
     }
-    else {
-      localStorage.setItem('token', "");
-      this.userRole = null;
-    }
+ 
   }
 
   getCurrentUrl() {

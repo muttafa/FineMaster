@@ -2,57 +2,68 @@
 <div class="wrapper d-flex align-items-stretch">
   <!-- Sidebar  -->
   <nav id="sidebar">
-    <div class="sidebar-header">
-      <h3>Bootstrap Sidebar</h3>
-    </div>
-
     <ul class="list-unstyled components">
-      <p>Dummy Heading</p>
       <li class="active">
-        <a href="#homeSubmenu" (click)="toggleSubMenu($event)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+        <a href="#homeSubmenu" (click)="toggleSubMenu($event)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Dersler</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
-          <li>
-            <a href="#">Home 1</a>
-          </li>
-          <li>
-            <a href="#">Home 2</a>
-          </li>
-          <li>
-            <a href="#">Home 3</a>
+          <li *ngFor="let lesson of lessonList" style="padding-left: 15px">
+            <input type="checkbox" name="name" [value]="lesson.lessonID" (change)="toggleSelectedLessons($event, lesson.lessonID)"/> {{lesson.lessonName}}
           </li>
         </ul>
       </li>
       <li>
-        <a href="#">About</a>
+        <a href="#dersSekli" (click)="toggleSubMenu($event)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Ders Şekli</a>
+        <ul class="collapse list-unstyled" id="dersSekli">
+          <li style="padding-left:15px">
+            <input type="radio" name="name" [(ngModel)]="selectedOption" value="1" /> Online
+          </li>
+          <li style="padding-left:15px">
+            <input type="radio" name="name" [(ngModel)]="selectedOption" value="2" /> YüzYüze
+          </li>
+          <li style="padding-left:15px">
+            <input type="radio" name="name" [(ngModel)]="selectedOption" value="3" /> Karışık
+          </li>
+        </ul>
       </li>
       <li>
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+        <a href="#pageSubmenu" (click)="toggleSubMenu($event)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fiyat Aralığı</a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li>
-            <a href="#">Page 1</a>
-          </li>
-          <li>
-            <a href="#">Page 2</a>
-          </li>
-          <li>
-            <a href="#">Page 3</a>
+          <li style="padding-left:15px">
+            <input type="number" name="minPrice" value="" [(ngModel)]="minPrice" placeholder="Min Fiyat" style="width:100px" />
+            -
+            <input type="number" name="maxPrice" value="" [(ngModel)]="maxPrice" placeholder="Max Fiyat" style="width:100px" />
           </li>
         </ul>
       </li>
       <li>
-        <a href="#">Portfolio</a>
-      </li>
-      <li>
-        <a href="#">Contact</a>
+        <a href="#sehirTercihi" (click)="toggleSubMenu($event)" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Şehir/İlçe</a>
+        <ul class="collapse list-unstyled" id="sehirTercihi">
+          <li style="padding-left: 15px;padding-right: 15px">
+            <div class="form-group">
+              <label for="city">Şehir</label>
+              <select class="form-control" [(ngModel)]="selectedCity" (change)="loadDistrict(selectedCity)">
+                <option [value]="none" disabled selected>Şehir</option>
+                <option *ngFor="let city of cities.data" [value]="city.id">{{city.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="district">İlçe</label>
+              <select class="form-control"  [(ngModel)]="selectedDistrict" >
+                <option [value]="none" disabled selected>İlçe</option>
+                <option *ngFor="let district of districts" [value]="district.id">{{district.name}}</option>
+              </select>
+            </div>
+          </li>
+        </ul>
       </li>
     </ul>
 
     <ul class="list-unstyled CTAs">
       <li>
-        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+        <a (click)="filter()" class="download">Filtreleri Uygula</a>
       </li>
       <li>
-        <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+        <a (click)="clear()" class="article">Filtreleri Temizle</a>
       </li>
     </ul>
   </nav>
@@ -63,26 +74,29 @@
       <div class="row">
         <ng-container *ngFor="let card of postList; let i = index;">
           <div class="col-md-3">
-            <div class="card mb-4 postCard"  (click)="goToDetailPage(card.adId)">
-              <div class="card-img-top" [style.backgroundImage]="'url(' + card.backgroundImage + ')'" style="height: 200px; background-size: cover;"></div>
-              <div class="card-body text-center">
-                <div class="profile-pic-top">
-                  <img *ngIf="card.userProfilePhoto != null" src="card.userProfilePhoto" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
-                  <img *ngIf="card.userProfilePhoto == null" src="../../../../assets/images/avatar-account-icon-default-social-media-profile-photo-vector.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
-                </div>
-                <br />
-                <div class="card-text mt-3">
-                  <p style="font-weight: bold; color: darkorchid; padding: 0px;font-size: 20px;">{{card.title}}</p>
-                  <div>
-                    <span style="float:left">{{card.userName}}</span>
-                    <span style="float:right;font-size: 10px">Ana Branş: {{card.lessonName}}</span><br />
+            <a [routerLink]="'/postDetail/' + card.adId">
+              <div class="card mb-4 postCard" (click)="goToDetailPage(card.adId)">
+                <div class="card-img-top" [style.backgroundImage]="'url(' + card.backgroundImage + ')'" style="height: 200px; background-size: cover;"></div>
+                <div class="card-body text-center">
+                  <div class="profile-pic-top">
+                    <img *ngIf="card.userProfilePhoto != null" src="card.userProfilePhoto" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+                    <img *ngIf="card.userProfilePhoto == null" src="../../../../assets/images/avatar-account-icon-default-social-media-profile-photo-vector.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
                   </div>
+                  <br />
+                  <div class="card-text mt-3">
+                    <p style="font-weight: bold; color: darkorchid; padding: 0px;font-size: 20px;">{{card.title}}</p>
+                    <div>
+                      <span style="float:left">{{card.userName}}</span>
+                      <span style="float:right;font-size: 10px">Ana Branş: {{card.lessonName}}</span><br />
+                    </div>
 
-                  <p style="float:left">{{ truncateText(card.summary, 10) }}</p>
-                  <p style="float:right">{{card.price}}₺ /saat</p>
+                    <p style="float:left">{{ truncateText(card.summary, 10) }}</p>
+                    <p style="float:right">{{card.price}}₺ /saat</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
+
           </div>
           <!-- Check if the index is divisible by 4 and not the first iteration -->
           <!-- This means every 4th card and onward -->
@@ -92,5 +106,6 @@
 
     </div>
   </div>
+
 </div>
 
