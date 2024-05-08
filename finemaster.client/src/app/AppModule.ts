@@ -14,29 +14,31 @@ import { FooterModule } from './ClientApp/Footer/footer.module';
 import { RegisterComponent } from './ClientApp/Register/register.component';
 import { StudentHomePageModule } from './ClientApp/Student/HomePage/studentHomePage.module';
 import { PostingModule } from './ClientApp/Teacher/Posting/posting.module';
+import { PostDetailModule } from './ClientApp/PostDetail/postDetailPage.module';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        RegisterComponent,
-    ],
-    imports: [
-        BrowserModule, HttpClientModule,
-        AppRoutingModule,
-        NavbarModule,
-        HomeModule,
-        FooterModule,
-        RouterModule,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        LoginModule,
-        StudentHomePageModule,
-        PostingModule
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+  ],
+  imports: [
+    BrowserModule, HttpClientModule,
+    AppRoutingModule,
+    NavbarModule,
+    HomeModule,
+    FooterModule,
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LoginModule,
+    StudentHomePageModule,
+    PostingModule,
+    PostDetailModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
