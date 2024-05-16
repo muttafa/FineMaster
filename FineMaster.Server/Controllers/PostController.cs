@@ -29,6 +29,7 @@ namespace FineMaster.Server.Controllers
                 Title = ad.AdTitle,
                 Summary = ad.AdSummary,
                 Price = ad.Price,
+                UserID = ad.UserID,
                 BackgroundImage = ad.AdImage,
                 UserName = _dbContext.Users
                         .Where(user => user.ID == ad.UserID)

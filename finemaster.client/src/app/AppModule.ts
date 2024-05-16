@@ -15,6 +15,7 @@ import { RegisterComponent } from './ClientApp/Register/register.component';
 import { StudentHomePageModule } from './ClientApp/Student/HomePage/studentHomePage.module';
 import { PostingModule } from './ClientApp/Teacher/Posting/posting.module';
 import { PostDetailModule } from './ClientApp/PostDetail/postDetailPage.module';
+import { TeacherHomePageModule } from './ClientApp/Teacher/HomePage/teacherHomePage.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PostDetailModule } from './ClientApp/PostDetail/postDetailPage.module';
     RegisterComponent,
   ],
   imports: [
-    BrowserModule, HttpClientModule,
+    BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     NavbarModule,
     HomeModule,
@@ -35,7 +37,8 @@ import { PostDetailModule } from './ClientApp/PostDetail/postDetailPage.module';
     LoginModule,
     StudentHomePageModule,
     PostingModule,
-    PostDetailModule
+    PostDetailModule,
+    TeacherHomePageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,7 +3,7 @@ import { Component, OnInit, NgModule, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../../../api.service.spec';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
   email: any;
   password: any;
@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
       if (response != null) {
         if (response.role == 'student') {
           this.router.navigate(['/student-home']);
-          sessionStorage.setItem("userInfo",JSON.stringify(response))
+          this.cookieService.set('userInfo', JSON.stringify(response))
         }
         else if (response.role == 'teacher') {
           this.router.navigate(['/teacher-home']);
-          sessionStorage.setItem("userInfo", JSON.stringify(response))
+          this.cookieService.set('userInfo', JSON.stringify(response))
         }
         else {
 

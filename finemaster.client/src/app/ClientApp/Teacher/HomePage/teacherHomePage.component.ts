@@ -1,16 +1,27 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, NgModule, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../../../../api.service.spec';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
   selector: 'app-teacherHome',
   templateUrl: './teacherHomePage.component.html',
-  styleUrl: './teacherHomePage.component.css'
+  styleUrls: ['./teacherHomePage.component.css']
 })
 export class TeacherHomePageComponent implements OnInit {
+  constructor(
+    private http: HttpClient,
+    private apiService: ApiService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private cookieService: CookieService,
+    private signalRService: SignalRService,
+  ) {}
 
   constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
 
@@ -18,6 +29,11 @@ export class TeacherHomePageComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const storedUser = this.cookieService.get('userInfo');
+    if (storedUser) {
+      var storedUserJson = JSON.parse(storedUser);
+      this.currentUserID = storedUserJson.id;
+    }
   }
   toggleSubMenu(event: Event): void {
     event.preventDefault();
