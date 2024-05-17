@@ -1,3 +1,4 @@
+using FineMaster.Server.Hubs;
 using FineMaster.Server.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSignalR();
 
 
 
@@ -52,15 +53,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
-app.UseAuthorization();
+
 app.UseCors(builder => builder
     .WithOrigins("https://localhost:4200")
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials());
 app.MapControllers();
-
+app.UseHttpsRedirection();
+app.UseAuthorization();
 app.MapFallbackToFile("/index.html");
-
+app.MapHub<ChatHub>("/chathub");
 app.Run();
