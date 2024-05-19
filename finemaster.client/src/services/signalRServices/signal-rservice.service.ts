@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class SignalRService {
 
   messageReceived$ = this.messageReceived.asObservable();
   token: string = localStorage.getItem('token') || '';
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -32,4 +33,14 @@ export class SignalRService {
     this.hubConnection.invoke('SendMessage', user, message)
       .catch(err => console.error(err));
   }
+  getMessageHistory(email: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(`https://localhost:7235/api/chat/history/${email}`);
+  }
+}
+
+export interface ChatMessage {
+  senderEmail: string;
+  recipientEmail: string;
+  message: string;
+  timestamp: Date;
 }

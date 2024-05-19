@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, NgModule, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../../../api.service.spec';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SignalRService } from '../../../services/signalRServices/signal-rservice.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { SignalRService } from '../../../services/signalRServices/signal-rservic
 })
 export class PostDetailComponent implements OnInit {
 
-  constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private signalRService: SignalRService) { }
+  constructor(private http: HttpClient,private cookie: CookieService, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private signalRService: SignalRService) { }
 
   postId: any;
   postDetails: any;
@@ -54,8 +55,17 @@ export class PostDetailComponent implements OnInit {
 
   sendMessage() {
     const userEmail = this.receiverMail;
-    this.signalRService.sendMessage(userEmail, this.message);
-    this.message = ''; 
+    let dataToSend = {
+      receiverMail: this.receiverMail
+    };
+
+    let navigationExtras: NavigationExtras = {
+      state: {
+        data: dataToSend
+      }
+    };
+
+    this.router.navigate(['/chat'], navigationExtras);
   }
 
 

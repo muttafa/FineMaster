@@ -12,5 +12,7 @@ public class ApplicationDBContext : DbContext
     public DbSet<Lessons> Lessons { get; set; }
     public DbSet<Ad> Ads { get; set; }
     public DbSet<UserLesson> UserLessons { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
+
 
 }
