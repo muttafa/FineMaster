@@ -31,6 +31,10 @@ namespace FineMaster.Server.Controllers
                 Price = ad.Price,
                 UserID = ad.UserID,
                 BackgroundImage = ad.AdImage,
+                Email = _dbContext.Users
+                        .Where(user => user.ID == ad.UserID)
+                        .Select(user => user.Email)
+                        .FirstOrDefault(),
                 UserName = _dbContext.Users
                         .Where(user => user.ID == ad.UserID)
                         .Select(user => user.Username)

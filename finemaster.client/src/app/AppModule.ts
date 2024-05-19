@@ -16,7 +16,13 @@ import { StudentHomePageModule } from './ClientApp/Student/HomePage/studentHomeP
 import { PostingModule } from './ClientApp/Teacher/Posting/posting.module';
 import { PostDetailModule } from './ClientApp/PostDetail/postDetailPage.module';
 import { TeacherHomePageModule } from './ClientApp/Teacher/HomePage/teacherHomePage.module';
+import { JwtModule } from '@auth0/angular-jwt';
 
+
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -38,7 +44,14 @@ import { TeacherHomePageModule } from './ClientApp/Teacher/HomePage/teacherHomeP
     StudentHomePageModule,
     PostingModule,
     PostDetailModule,
-    TeacherHomePageModule
+    TeacherHomePageModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:7235'],
+        disallowedRoutes: []
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

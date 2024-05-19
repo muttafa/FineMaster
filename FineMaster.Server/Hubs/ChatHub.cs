@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
-namespace FineMaster.Server.Hubs
+namespace ChatApp.Hubs
 {
-    [Authorize] 
     public class ChatHub : Hub
     {
-        public async Task SendMessage(string userId, string message)
+        public async Task SendMessage(string email, string message)
         {
-            // Mesajı alıcı kullanıcının kimliğine göre yönlendirme
-            await Clients.User(userId).SendAsync("ReceiveMessage", message);
+            await Clients.User(email).SendAsync("ReceiveMessage", message);
         }
     }
 }

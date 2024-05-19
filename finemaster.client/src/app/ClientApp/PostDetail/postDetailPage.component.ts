@@ -21,12 +21,10 @@ export class PostDetailComponent implements OnInit {
   district: any;
   message: string = '';
   receivedMessages: string[] = [];
-  receiverID: any;
+  receiverMail: any;
   ngOnInit(): void {
     this.signalRService.startConnection();
-    this.signalRService.getMessage().subscribe((message: string) => {
-      this.receivedMessages.push(message);
-    });
+    
     this.getLocation();
     this.route.params.subscribe(params => {
       this.postId = params['userID'];
@@ -48,15 +46,15 @@ export class PostDetailComponent implements OnInit {
       this.apiService.getPostDetail(id).subscribe((response: any) => {
         if (response.success) {
           this.postDetails = response.data;
-          this.receiverID = this.postDetails.userID.toString();
+          this.receiverMail = this.postDetails.email.toString();
         }
       });
     }
   }
 
   sendMessage() {
-    const userID = this.receiverID;
-    this.signalRService.sendMessage( userID, this.message);
+    const userEmail = this.receiverMail;
+    this.signalRService.sendMessage(userEmail, this.message);
     this.message = ''; 
   }
 

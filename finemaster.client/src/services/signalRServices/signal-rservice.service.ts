@@ -1,44 +1,35 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
-  private messageSubject: Subject<string> = new Subject<string>();
+  private messageReceived = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient) { }
+  messageReceived$ = this.messageReceived.asObservable();
+  token: string = localStorage.getItem('token') || '';
+  constructor() { }
 
-  public startConnection = () => {
+  startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:7235/chathub', {
-        accessTokenFactory: () => this.getToken()! 
-      })
+      .withUrl('https://localhost:7235/chathub', { accessTokenFactory: () => this.token })
       .build();
 
-    this.hubConnection.start().then(() => {
-      console.log('SignalR connection started');
-    }).catch(err => {
-      console.error('Error while starting connection:', err);
-    });
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .catch(err => console.log('Error while starting connection: ' + err));
 
     this.hubConnection.on('ReceiveMessage', (message: string) => {
-      this.messageSubject.next(message);
+      this.messageReceived.next(message);
     });
   }
 
-  private getToken(): string | null {
-    return localStorage.getItem('token'); 
-  }
-
-  sendMessage(userID: string,message: string) {
-    this.hubConnection.invoke('SendMessage',userID, message);
-  }
-
-  getMessage(): Observable<string> {
-    return this.messageSubject.asObservable();
+  sendMessage(user: string, message: string): void {
+    this.hubConnection.invoke('SendMessage', user, message)
+      .catch(err => console.error(err));
   }
 }

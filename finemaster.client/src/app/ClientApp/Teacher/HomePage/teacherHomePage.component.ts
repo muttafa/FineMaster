@@ -25,10 +25,7 @@ export class TeacherHomePageComponent implements OnInit {
     private signalRService: SignalRService,
   ) {
       
-    this.signalRService.startConnection();
-    this.hubConnection.on('ReceiveMessage', (message: string) => {
-      console.log(message);
-    });
+  
 
   }
 
@@ -38,8 +35,11 @@ export class TeacherHomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.signalRService.startConnection();
-    this.signalRService.getMessage().subscribe((message: string) => {
-      this.receivedMessages.push(message);
+    this.signalRService.messageReceived$.subscribe((message: string) => {
+      if (message) {
+        this.receivedMessages.push(message);
+        console.log(message);
+      }
     });
     const storedUser = this.cookieService.get('userInfo');
     if (storedUser) {
