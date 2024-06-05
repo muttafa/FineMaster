@@ -18,6 +18,7 @@ import { PostDetailModule } from './ClientApp/PostDetail/postDetailPage.module';
 import { TeacherHomePageModule } from './ClientApp/Teacher/HomePage/teacherHomePage.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ChatModule } from './ClientApp/Chat/chat.module';
+import { MyProfileModule } from './ClientApp/Teacher/MyProfile/myprofile.module';
 
 
 
@@ -47,6 +48,7 @@ export function tokenGetter() {
     PostDetailModule,
     TeacherHomePageModule,
     ChatModule,
+    MyProfileModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

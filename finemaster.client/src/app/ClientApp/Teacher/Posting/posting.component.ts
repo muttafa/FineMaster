@@ -4,6 +4,8 @@ import { ApiService } from '../../../../api.service.spec';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 
 @Component({
@@ -27,9 +29,11 @@ export class PostingComponent implements OnInit {
 
   lessonList: any;
 
+  public Editor = ClassicEditor;
 
   ngOnInit(): void {
     this.getLessonList();
+
   }
 
 

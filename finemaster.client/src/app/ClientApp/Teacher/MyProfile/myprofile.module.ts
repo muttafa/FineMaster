@@ -1,17 +1,17 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { PostingComponent } from './posting.component';
+import { MyProfileComponent } from './myprofile.component';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 @NgModule({
   declarations: [
-    PostingComponent
+    MyProfileComponent
   ],
   exports: [
-    PostingComponent
+    MyProfileComponent
   ],
 
   imports: [
@@ -24,4 +24,4 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
   providers: [],
   bootstrap: []
 })
-export class PostingModule { }
+export class MyProfileModule { }

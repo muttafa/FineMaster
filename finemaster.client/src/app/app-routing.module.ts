@@ -8,6 +8,7 @@ import { TeacherHomePageComponent } from './ClientApp/Teacher/HomePage/teacherHo
 import { PostingComponent } from './ClientApp/Teacher/Posting/posting.component';
 import { PostDetailComponent } from './ClientApp/PostDetail/postDetailPage.component';
 import { ChatComponent } from './ClientApp/Chat/chat.component';
+import { MyProfileComponent } from './ClientApp/Teacher/MyProfile/myprofile.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'posting', component: PostingComponent },
   { path: 'postDetail/:userID', component: PostDetailComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'profile', component: MyProfileComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // Varsayılan olarak /home'a yönlendir
   { path: '**', redirectTo: '/home' } 
 ];
