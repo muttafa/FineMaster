@@ -37,4 +37,12 @@ export class NavbarComponent implements OnInit {
     return currentUrl;
   }
 
+  toggleSubMenu(event: Event): void {
+    event.preventDefault();
+    const target = event.target as HTMLElement;
+    const submenu = target.nextElementSibling;
+    if (submenu && submenu.classList.contains('collapse')) {
+      submenu.classList.toggle('show');
+    }
+  }
 }

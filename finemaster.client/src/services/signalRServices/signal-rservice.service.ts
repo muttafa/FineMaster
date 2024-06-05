@@ -33,8 +33,9 @@ export class SignalRService {
     this.hubConnection.invoke('SendMessage', user, message)
       .catch(err => console.error(err));
   }
-  getMessageHistory(email: string): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(`https://localhost:7235/api/chat/history/${email}`);
+  getMessageHistory(senderEmail: string, recipientEmail: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(`https://localhost:7235/api/chat/history/${recipientEmail}/${senderEmail}`);
+
   }
 }
 

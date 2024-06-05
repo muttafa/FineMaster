@@ -1,4 +1,5 @@
 ﻿using FineMaster.Server.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -26,17 +27,26 @@ namespace ChatApp.Hubs
                 Message = message,
                 Timestamp = DateTime.Now
             };
+            try
+            {
+                await _context.ChatMessage.AddAsync(chatMessage);
+                await _context.SaveChangesAsync();
 
-            _context.ChatMessages.Add(chatMessage);
-
-            await Clients.User(email).SendAsync("ReceiveMessage", message);
-            await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+            finally
+            {
+                await Clients.User(email).SendAsync("ReceiveMessage", message);
+            }
 
         }
         public async Task<List<ChatMessage>> GetMessageHistory(string recipientEmail)
         {
             var senderEmail = Context.UserIdentifier;
-            var messages = await _context.ChatMessages
+            var messages = await _context.ChatMessage
                 .Where(m => (m.SenderEmail == senderEmail && m.RecipientEmail == recipientEmail) ||
                             (m.SenderEmail == recipientEmail && m.RecipientEmail == senderEmail))
                 .OrderBy(m => m.Timestamp)

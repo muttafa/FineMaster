@@ -1,80 +1,59 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <div class="col-md-4">
-        <!-- İsimlerin olduğu kısım -->
-        <h4>İsimler</h4>
-        <div class="list-group">
-          <a href="#" class="list-group-item">
-            <img src="path/to/image1.jpg" alt="User 1" class="img-circle" style="width: 30px; height: 30px;">
-            Kullanıcı 1
-          </a>
-          <a href="#" class="list-group-item">
-            <img src="path/to/image2.jpg" alt="User 2" class="img-circle" style="width: 30px; height: 30px;">
-            Kullanıcı 2
-          </a>
-          <!-- Diğer kullanıcılar için aynı şekilde devam edebilirsiniz -->
-        </div>
+    <div class="col-md-4">
+      <h4>İsimler</h4>
+      <div class="list-group" *ngFor="let user of userList">
+        <a class="list-group-item" (click)="selectChat(user.email)">
+          <img src="{{user.userImage}}" alt="{{user.username}}" class="img-circle" style="width: 30px; height: 30px;">
+          {{user.username}}
+        </a>
+       
+        <!-- Diğer kullanıcılar için aynı şekilde devam edebilirsiniz -->
       </div>
-      <div class="col-md-8">
-        <!-- Mesajlaşma kısmı -->
-        <h4>Mesajlaşma</h4>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <ul class="chat">
-              <!-- Mesajlar buraya eklenecek -->
-              <li class="left clearfix">
-                <span class="chat-img pull-left">
-                  <img src="path/to/image1.jpg" alt="User 1" class="img-circle" style="width: 50px; height: 50px;">
-                </span>
-                <div class="chat-body clearfix">
-                  <div class="header">
-                    <strong class="primary-font">Kullanıcı 1</strong>
-                  </div>
-                  <p>
-                    Mesaj 1
-                  </p>
-                </div>
-              </li>
-              <li class="right clearfix">
-                <span class="chat-img pull-right">
-                  <img src="path/to/image2.jpg" alt="User 2" class="img-circle" style="width: 50px; height: 50px;">
-                </span>
-                <div class="chat-body clearfix">
-                  <div class="header">
-                    <strong class="pull-right primary-font">Kullanıcı 2</strong>
-                  </div>
-                  <p>
-                    Mesaj 2
-                  </p>
-                </div>
-              </li>
-              <!-- Diğer mesajlar için aynı şekilde devam edebilirsiniz -->
-            </ul>
-          </div>
-          <div class="panel-footer">
-            <div class="input-group">
-              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Mesajınızı yazın...">
-              <span class="input-group-btn">
-                <button class="btn btn-primary btn-sm" id="btn-chat">Gönder</button>
+    </div>
+    <div class="col-md-8">
+      <h4>Mesajlaşma</h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul class="chat">
+            <li class="left clearfix" *ngFor="let msg of messages">
+              <span class="chat-img pull-left">
+                <img src="path/to/image1.jpg" alt="User 1" class="img-circle">
               </span>
-            </div>
+              <div class="chat-body clearfix">
+                <div class="header">
+                  <strong class="primary-font">{{msg.senderEmail}}</strong>
+                </div>
+                <p>
+                  {{msg.message}}
+                </p>
+              </div>
+            </li>
+            <!--<li class="right clearfix">
+              <span class="chat-img pull-right">
+                <img src="path/to/image2.jpg" alt="User 2" class="img-circle">
+              </span>
+              <div class="chat-body clearfix">
+                <div class="header">
+                  <strong class="pull-right primary-font">Kullanıcı 2</strong>
+                </div>
+                <p>
+                  Mesaj 2
+                </p>
+              </div>
+            </li>-->
+            <!-- Diğer mesajlar için aynı şekilde devam edebilirsiniz -->
+          </ul>
+        </div>
+        <div class="panel-footer">
+          <div class="input-group">
+            <input id="btn-input" type="text" class="form-control input-sm" [(ngModel)]="message" placeholder="Mesajınızı yazın...">
+            <span class="input-group-btn">
+              <button class="btn btn-primary btn-sm" id="btn-chat" (click)="sendMessage()">Gönder</button>
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-
-<div>
-  <h2>Chat</h2>
-  <div>
-    <label for="message">Message:</label>
-    <input type="text" id="message" [(ngModel)]="message">
-    <button (click)="sendMessage()">Send</button>
-  </div>
-  <div *ngFor="let msg of messages">
-    <p><strong>{{ msg.senderEmail }}:</strong> {{ msg.message }} <small>{{ msg.timestamp }}</small></p>
   </div>
 </div>

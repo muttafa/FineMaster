@@ -127,5 +127,22 @@ export class ApiService {
         console.error(error);
         return throwError('Something went wrong; please try again later.');
       })
-    );  }
+    );
+  }
+
+  getUserHistory(userMail: string): Observable<any> {
+    const url = `${this.baseUrl}/Chat/getUserHistory/${userMail}`;
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(url, { headers }).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError('Something went wrong; please try again later.');
+      })
+    );
+  }
+
 }

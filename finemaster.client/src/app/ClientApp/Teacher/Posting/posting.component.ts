@@ -3,6 +3,7 @@ import { Component, OnInit, NgModule, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../../../../api.service.spec';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PostingComponent implements OnInit {
 
-  constructor(private http: HttpClient, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
 
   post = {
     lessonID: 0,

@@ -64,7 +64,7 @@ export class PostDetailComponent implements OnInit {
         data: dataToSend
       }
     };
-
+    this.signalRService.sendMessage(this.receiverMail, this.message);
     this.router.navigate(['/chat'], navigationExtras);
   }
 
