@@ -144,5 +144,29 @@ export class ApiService {
       })
     );
   }
+  saveTeacherProfile(id: any , editorData: any): Observable<any> {
+    const url = `${this.baseUrl}/Teacher/saveProfile`;
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(url, { id , editorData }, { headers: headers }).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError('Something went wrong; please try again later.');
+      })
+    );
+  }
+  getTeacherProfileByID(id: any): Observable<any> {
+    const url = `${this.baseUrl}/Common/getProfileCode/${id}`;
+
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError('Something went wrong; please try again later.');
+      }))
+  };
+    
 
 }

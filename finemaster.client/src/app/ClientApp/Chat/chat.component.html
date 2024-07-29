@@ -18,31 +18,18 @@
           <ul class="chat">
             <li class="left clearfix" *ngFor="let msg of messages">
               <span class="chat-img pull-left">
-                <img src="path/to/image1.jpg" alt="User 1" class="img-circle">
+                <img style="width: 30px; height: 30px;" src="{{selecteduser.userImage}}" alt="User 1" class="img-circle">
               </span>
               <div class="chat-body clearfix">
                 <div class="header">
-                  <strong class="primary-font">{{msg.senderEmail}}</strong>
+                  <strong *ngIf="selecteduser.email != curruser" class="primary-font">{{selecteduser.username}}</strong>
+                  <strong *ngIf="selecteduser.email == curruser" class="primary-font">Ben</strong>
                 </div>
                 <p>
                   {{msg.message}}
                 </p>
               </div>
             </li>
-            <!--<li class="right clearfix">
-              <span class="chat-img pull-right">
-                <img src="path/to/image2.jpg" alt="User 2" class="img-circle">
-              </span>
-              <div class="chat-body clearfix">
-                <div class="header">
-                  <strong class="pull-right primary-font">Kullanıcı 2</strong>
-                </div>
-                <p>
-                  Mesaj 2
-                </p>
-              </div>
-            </li>-->
-            <!-- Diğer mesajlar için aynı şekilde devam edebilirsiniz -->
           </ul>
         </div>
         <div class="panel-footer">

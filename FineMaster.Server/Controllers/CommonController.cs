@@ -57,5 +57,28 @@ namespace FineMaster.Server.Controllers
 
             return Ok();
         }
+
+        [HttpGet("getProfileCode/{id}")]
+        public ActionResult GetProfileCode(int id)
+        {
+            var userProfile = _dbContext.Profiler.Where(x => x.UserID == id).FirstOrDefault();
+
+            if (userProfile != null)
+            {
+
+                var response = new
+                {
+                    Success = true,
+                    Data = userProfile.UP_Code
+                };
+
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

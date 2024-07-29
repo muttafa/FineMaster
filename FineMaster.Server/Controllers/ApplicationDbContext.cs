@@ -13,6 +13,7 @@ public class ApplicationDBContext : DbContext
     public DbSet<Ad> Ads { get; set; }
     public DbSet<UserLesson> UserLessons { get; set; }
     public DbSet<ChatMessage> ChatMessage { get; set; }
+    public DbSet<Profiler> Profiler { get; set; }
 
 
 }

@@ -33,10 +33,43 @@ namespace FineMaster.Server.Controllers
 
                 _dbContext.Add(ad);
                 _dbContext.SaveChanges();
-                return Ok(new {success = true, message = "İlanınız başarılı şekilde oluşturulmuştur"});
+                return Ok(new { success = true, message = "İlanınız başarılı şekilde oluşturulmuştur" });
             }
             return BadRequest(new { success = false, message = "Bilgilerinizi kontrol ediniz ve tekrar deneyiniz" });
         }
 
+        [HttpPost("saveProfile")]
+        public ActionResult SaveProfile([FromBody] TeacherProfile editorData)
+        {
+            if (editorData == null)
+            {
+                return BadRequest("Invalid data.");
+            }
+            else
+            {
+                var currentProfile = _dbContext.Profiler.Where(x => x.UserID == editorData.Id).FirstOrDefault();
+
+                if (currentProfile != null)
+                {
+                    currentProfile.UP_Code = editorData.EditorData;
+
+                    _dbContext.SaveChanges();
+                    return Ok();
+                }
+                else
+                {
+                    Profiler newProfiler = new Profiler();
+
+                    newProfiler.UserID = editorData.Id;
+                    newProfiler.UP_Code= editorData.EditorData;
+
+                    _dbContext.Profiler.Add(newProfiler);
+                    _dbContext.SaveChanges();
+                    return Ok();
+                }
+
+            }
+
+        }
     }
 }
