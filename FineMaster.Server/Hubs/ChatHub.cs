@@ -1,9 +1,10 @@
 ﻿using FineMaster.Server.Models;
-using FineMaster.Server.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,12 +19,10 @@ namespace ChatApp.Hubs
         {
             _context = context;
             _channel = rabbitMQService.GetChannel();
-
         }
 
         public async Task SendMessage(string email, string message)
         {
-
             var senderEmail = Context.UserIdentifier;
 
             var chatMessage = new ChatMessage
@@ -33,6 +32,7 @@ namespace ChatApp.Hubs
                 Message = message,
                 Timestamp = DateTime.Now
             };
+
             try
             {
                 await _context.ChatMessage.AddAsync(chatMessage);
@@ -48,12 +48,8 @@ namespace ChatApp.Hubs
             {
                 throw new Exception(ex.ToString());
             }
-            finally
-            {
-                await Clients.User(email).SendAsync("ReceiveMessage", message);
-            }
-
         }
+
         public async Task<List<ChatMessage>> GetMessageHistory(string recipientEmail)
         {
             var senderEmail = Context.UserIdentifier;
