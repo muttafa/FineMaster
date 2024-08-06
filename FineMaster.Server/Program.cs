@@ -1,4 +1,5 @@
 using ChatApp.Hubs;
+using FineMaster.Server.Controllers;
 using FineMaster.Server.Models;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -85,6 +86,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHangfireDashboard();
+RecurringJob.AddOrUpdate("payment-test", () => paymenttestclass.payment(), Cron.Monthly);
+
 
 app.UseCors(builder => builder
     .WithOrigins("https://localhost:4200")
