@@ -1,7 +1,10 @@
 ﻿using FineMaster.Server.Models;
+using FineMaster.Server.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ChatApp.Hubs
@@ -9,10 +12,13 @@ namespace ChatApp.Hubs
     public class ChatHub : Hub
     {
         private readonly ApplicationDBContext _context;
+        private readonly IModel _channel;
 
-        public ChatHub(ApplicationDBContext context)
+        public ChatHub(ApplicationDBContext context, RabbitMQService rabbitMQService)
         {
             _context = context;
+            _channel = rabbitMQService.GetChannel();
+
         }
 
         public async Task SendMessage(string email, string message)
@@ -32,6 +38,11 @@ namespace ChatApp.Hubs
                 await _context.ChatMessage.AddAsync(chatMessage);
                 await _context.SaveChangesAsync();
 
+                var body = Encoding.UTF8.GetBytes($"{email};{message}");
+                _channel.BasicPublish(exchange: "",
+                                      routingKey: "chat_messages",
+                                      basicProperties: null,
+                                      body: body);
             }
             catch (Exception ex)
             {
