@@ -19,16 +19,26 @@ public class EmailService
 
     public async Task SendEmailAsync(string recipientEmail, string subject, string body)
     {
-        var mailMessage = new MailMessage
+        try
         {
-            From = new MailAddress("mucarr419@gmail.com"),
-            Subject = subject,
-            Body = body,
-            IsBodyHtml = true,
-        };
+            //var mailMessage = new MailMessage
+            //{
+            //    From = new MailAddress("mucarr419@gmail.com"),
+            //    Subject = subject,
+            //    Body = body,
+            //    IsBodyHtml = true,
+            //};
 
-        mailMessage.To.Add(recipientEmail);
+            //mailMessage.To.Add(recipientEmail);
 
-        await _smtpClient.SendMailAsync(mailMessage);
+            //await _smtpClient.SendMailAsync(mailMessage);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        
+
     }
 }

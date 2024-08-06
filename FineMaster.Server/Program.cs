@@ -1,5 +1,6 @@
 using ChatApp.Hubs;
 using FineMaster.Server.Models;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,15 @@ using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+builder.Services.AddHangfire(config =>
+{
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddHangfireServer();
 
 builder.Services.AddSingleton<RabbitMQService>();
 builder.Services.AddSingleton<EmailService>();
@@ -73,6 +83,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHangfireDashboard();
 
 app.UseCors(builder => builder
     .WithOrigins("https://localhost:4200")
