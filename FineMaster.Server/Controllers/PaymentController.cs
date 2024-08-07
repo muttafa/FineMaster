@@ -1,6 +1,6 @@
 ﻿using Hangfire;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FineMaster.Server.Models;
 
 namespace FineMaster.Server.Controllers
 {
@@ -8,21 +8,18 @@ namespace FineMaster.Server.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+        private readonly ApplicationDBContext _dbContext;
+
+        public PaymentController(ApplicationDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         [HttpGet]
         public IActionResult Get()
         {
-            BackgroundJob.Enqueue(() => paymenttestclass.payment());
-            return Ok("Hangfire abaşarılı");
-        }
-
-    }
-
-    public class paymenttestclass()
-    {
-        public static void payment()
-        {
-            Console.WriteLine("Hangfire çalıştı");
+            BackgroundJob.Enqueue(() => new PaymentTestClass(_dbContext).ProcessPayments());
+            return Ok("Hangfire başarılı bir şekilde çalıştırıldı");
         }
     }
 }

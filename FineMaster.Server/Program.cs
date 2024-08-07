@@ -86,7 +86,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHangfireDashboard();
-RecurringJob.AddOrUpdate("payment-test", () => paymenttestclass.payment(), Cron.Monthly);
+RecurringJob.AddOrUpdate<PaymentTestClass>("payment-test", x => x.ProcessPayments(),
+            Cron.Minutely);
 
 
 app.UseCors(builder => builder

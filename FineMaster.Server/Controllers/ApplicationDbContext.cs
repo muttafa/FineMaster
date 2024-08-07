@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using static FineMaster.Server.Models.UserLessons;
 public class ApplicationDBContext : DbContext
 {
+    public ApplicationDBContext()
+    {
+    }
+
     public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
         : base(options)
     {
