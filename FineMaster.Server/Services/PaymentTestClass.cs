@@ -8,7 +8,6 @@ public class PaymentTestClass
 {
     private readonly ApplicationDBContext _dbContext;
 
-    // Dependency Injection ile ApplicationDBContext'i alıyoruz
     public PaymentTestClass(ApplicationDBContext dbContext)
     {
         _dbContext = dbContext;
@@ -16,12 +15,10 @@ public class PaymentTestClass
 
     public void ProcessPayments()
     {
-        // Veritabanından ödeme yapılmamış kullanıcıları alıyoruz
-        List<Users> users = _dbContext.Users.Where(x => x.IsPayment == false || x.IsPayment == null).ToList();
+        List<Users> users = _dbContext.Users.Where(x => x.IsPayment == 0 || x.IsPayment == null).ToList();
 
         foreach (var user in users)
         {
-            // RabbitMQ kuyruğuna mesaj gönder
             SendRabbitMQMessage(user);
         }
         Console.WriteLine("Hangfire çalıştı ve RabbitMQ mesajları gönderildi");
@@ -41,7 +38,6 @@ public class PaymentTestClass
             channel.BasicPublish(exchange: "", routingKey: "paymentQueue", basicProperties: null, body: body);
             Console.WriteLine($"Kullanıcı {user.ID} için mesaj RabbitMQ kuyruğuna eklendi");
 
-            // Ödeme işlemini tetikle
             ProcessPayment(user);
             
         }
@@ -51,20 +47,17 @@ public class PaymentTestClass
     {
         try
         {
-            // Buraya ödeme işlemi entegrasyonunu ekleyin
-            bool paymentSuccess = true; // Ödeme işlemi başarı durumu
+            bool paymentSuccess = true; 
 
             if (paymentSuccess)
             {
-                // Ödeme işlemi başarılı olursa kullanıcıyı güncelle
-                user.IsPayment = true;
+                user.IsPayment = 1;
                 _dbContext.SaveChanges();
                 Console.WriteLine($"Kullanıcı {user.ID} için ödeme işlemi başarılı oldu ve veritabanı güncellendi");
             }
         }
         catch (Exception ex)
         {
-            // Hata yönetimi burada yapılacak
             Console.WriteLine($"Kullanıcı {user.ID} için ödeme işlemi başarısız oldu: {ex.Message}");
         }
     }

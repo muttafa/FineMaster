@@ -19,7 +19,7 @@ namespace FineMaster.Server.Models
         public string? Role { get; set; }
         public string? PhoneNumber { get; set; }
         public int? CourseStyle { get; set; }
-        public bool? IsPayment { get; set; }
+        public byte? IsPayment { get; set; }
         public List<Ad>? Ads { get; set; }
     }
 }
