@@ -33,23 +33,31 @@ public class ChatController : ControllerBase
     public async Task<ActionResult<List<Users>>> GetUserHistory(string userMail)
     {
         List<Users> userList = new List<Users>();
-        var senderList = _context.ChatMessage.Where(x => x.RecipientEmail == userMail || x.SenderEmail == userMail).Distinct().ToList();
 
-        foreach (var sender in senderList)
+        var emailPairs = _context.ChatMessage
+            .Select(x => new { x.SenderEmail, x.RecipientEmail })
+            .ToList();
+
+        var uniqueEmails = emailPairs
+            .SelectMany(x => new[] { x.SenderEmail, x.RecipientEmail })
+            .Distinct()
+            .Where(email => email != userMail)
+            .ToList();
+
+        var usersChatted = _context.Users
+            .Where(user => uniqueEmails.Contains(user.Email))
+            .ToList();
+
+        foreach (var user in usersChatted)
         {
-            var usersChatted = _context.Users.Where(x => x.Email == sender.SenderEmail).FirstOrDefault();
-            if (usersChatted != null && usersChatted.Email != userMail)
+            if (!userList.Any(u => u.Email == user.Email))
             {
-                var oldUser = userList.Where(x => x.Email == sender.SenderEmail || x.Email == sender.RecipientEmail);
-                if (oldUser.Count() == 0)
-                {
-                    userList.Add(usersChatted);
-                }
+                userList.Add(user);
             }
         }
 
         return Ok(userList);
-     
+
 
 
     }

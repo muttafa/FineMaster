@@ -16,7 +16,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export class PostingComponent implements OnInit {
 
   constructor(private http: HttpClient, private cookieService: CookieService, private apiService: ApiService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
-
+  userInfo: any;
   post = {
     lessonID: 0,
     hourlyRate: 0,
@@ -32,6 +32,10 @@ export class PostingComponent implements OnInit {
   public Editor = ClassicEditor;
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    this.apiService.getUserInfo(token).subscribe((response : any) => {
+      this.userInfo = response;
+    })
     this.getLessonList();
 
   }
@@ -46,11 +50,8 @@ export class PostingComponent implements OnInit {
   }
 
   submitPost() {
-    const userInfoString = sessionStorage.getItem("userInfo");
-    if (userInfoString !== null) {
-      const userInfo = JSON.parse(userInfoString);
-      this.post.userID = userInfo.id;
-
+    if (this.userInfo !== null) {
+      this.post.userID = this.userInfo.id;
     }
     this.apiService.createPost(this.post).subscribe();
     this.resetForm();
