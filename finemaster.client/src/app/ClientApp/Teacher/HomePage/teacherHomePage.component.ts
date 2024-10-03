@@ -23,16 +23,12 @@ export class TeacherHomePageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cookieService: CookieService,
     private signalRService: SignalRService,
-  ) {
-      
-  
-
-  }
+  ) { }
 
   currentUserID: any;
  
   receivedMessages: string[] = [];
-
+  studentsInfo: any;
   ngOnInit(): void {
     this.signalRService.startConnection();
     this.signalRService.messageReceived$.subscribe((message: string) => {
@@ -45,7 +41,12 @@ export class TeacherHomePageComponent implements OnInit {
     if (storedUser) {
       var storedUserJson = JSON.parse(storedUser);
       this.currentUserID = storedUserJson.id;
+      this.studentsInfo = this.getStudentData(this.currentUserID)
+
     }
+
+    
+
   }
   toggleSubMenu(event: Event): void {
     event.preventDefault();
@@ -56,4 +57,14 @@ export class TeacherHomePageComponent implements OnInit {
     }
   }
 
+  async getStudentData(tId: number) {
+    const studentData = await this.apiService.getTeacherStudents(tId);
+    return studentData;
+  }
+
+
+
+
 }
+
+

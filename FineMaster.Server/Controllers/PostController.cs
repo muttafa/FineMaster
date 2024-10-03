@@ -52,7 +52,10 @@ namespace FineMaster.Server.Controllers
                 District = _dbContext.Users.Where(user => user.ID == ad.UserID)
                                 .Select(user => user.District)
                                 .FirstOrDefault(),
-                lessonID = ad.LessonID
+                lessonID = ad.LessonID,
+                UP_Code = _dbContext.Profiler.Where(user => user.UserID == ad.UserID)
+                                          .Select(user => user.UP_Code)
+                                          .FirstOrDefault()
             }).FirstOrDefault();
 
             return Ok(new { success = true, data = post });

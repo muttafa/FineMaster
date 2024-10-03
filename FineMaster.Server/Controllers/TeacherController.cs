@@ -3,6 +3,7 @@ using FineMaster.Server.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FineMaster.Server.Controllers
 {
@@ -68,6 +69,26 @@ namespace FineMaster.Server.Controllers
                     return Ok();
                 }
 
+            }
+
+        }
+
+        [HttpGet("getTeacherStudent/{tId}")]
+        public async Task<IActionResult> GetStudents(int tId)
+        {
+            try
+            {
+                var studentIds = await _dbContext.UserLessons.Where(x => x.teacherID == tId && x.isActive == true).Select(x => x.studentID).ToListAsync();
+
+                var selectedStudents = await _dbContext.Users
+                 .Where(u => studentIds.Contains(u.ID))
+                 .ToListAsync();
+
+                return Ok( selectedStudents);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
         }

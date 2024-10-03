@@ -167,6 +167,16 @@ export class ApiService {
         return throwError('Something went wrong; please try again later.');
       }))
   };
-    
+
+  getTeacherStudents(tId: any): Observable<any> {
+    const url = `${this.baseUrl}/Teacher/getTeacherStudent/${tId}`;
+
+    return this.http.get(url).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError('Something went wrong; please try again later.')
+      })
+    )
+  }
 
 }

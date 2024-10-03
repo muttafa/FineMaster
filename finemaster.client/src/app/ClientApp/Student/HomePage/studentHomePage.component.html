@@ -79,7 +79,7 @@
                 <div class="card-img-top" [style.backgroundImage]="'url(' + card.backgroundImage + ')'" style="height: 200px; background-size: cover;"></div>
                 <div class="card-body text-center">
                   <div class="profile-pic-top">
-                    <img *ngIf="card.userProfilePhoto != null" src="card.userProfilePhoto" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
+                    <img *ngIf="card.userProfilePhoto != null" [src]="card.userProfilePhoto" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
                     <img *ngIf="card.userProfilePhoto == null" src="../../../../assets/images/avatar-account-icon-default-social-media-profile-photo-vector.jpg" alt="Profile Picture" class="rounded-circle profilePhoto" style="width: 100px; height: 100px;">
                   </div>
                   <br />
